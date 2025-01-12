@@ -39,8 +39,8 @@ function TodoList() {
   return (
     <TaskContext.Provider value={{ fetchAllTasks }}>
       <div className={styles.container}>
-        <h1>Todo List</h1>
-        <div style={{ width: "320px", display: "flex" }}>
+        <h1 className={styles.title}>Todo List</h1>
+        <div className={styles.addContainer}>
           <input
             type="text"
             value={todoItem}
