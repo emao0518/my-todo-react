@@ -1,0 +1,70 @@
+.addContainer {
+  width: 320px;
+  display: flex;
+
+  @media (width <= 480px) {
+    width: 300px;
+  }
+}
+
+.title {
+  @media (width <= 640px) {
+    font-size: 24px;
+  }
+}
+
+.btn {
+  width: 60px;
+  margin-right: 5px;
+  border: none;
+  padding: 4px 0;
+  &:hover:enabled {
+    background-color: gray;
+  }
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 320px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+  padding: 3px 0 3px 5px;
+
+  @media (width <= 480px) {
+    width: 300px;
+  }
+}
+
+.itemLeft {
+  display: flex;
+  border: none;
+  flex: 1;
+  background: transparent;
+  padding: 0;
+  align-items: center;
+}
+
+.inputBox {
+  width: 100%;
+  margin-right: 5px;
+}
+
+.addInput {
+  margin-right: 5px;
+  flex: 1;
+}
+
+.btnContainer {
+  display: inline-flex;
+}
+
+.err {
+  color: red;
+  margin-bottom: 0;
+}
+
+ul {
+  padding: 0;
+}
