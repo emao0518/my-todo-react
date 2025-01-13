@@ -14,6 +14,7 @@ const TodoList = () => {
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           className={styles.addInput}
+          placeholder="Please enter new to do item"
         />
         <button type="submit" className={styles.btn}>
           Add

@@ -24,6 +24,7 @@ export const TodoProvider = ({ children }) => {
 
   const handleAddTodoItem = (e) => {
     e.preventDefault();
+    if (!newTitle) return;
     const newToDo = { title: newTitle, isComplete: false };
     taskAPI.addTask(newToDo).then(({ data }) => {
       if (!data || !data.success) {
