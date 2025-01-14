@@ -1,7 +1,9 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import * as taskAPI from "../api/task";
 
 export const TodoContext = createContext();
+
+export const useTodoContext = () => useContext(TodoContext);
 
 export const TodoProvider = ({ children }) => {
   const [todoList, setTodoList] = useState([]);

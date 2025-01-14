@@ -1,11 +1,10 @@
-import { useContext } from "react";
-import { TodoContext } from "../context/TodoContext";
+import { useTodoContext } from "../context/TodoContext";
 import TodoItem from "./TodoItem";
 import styles from "./todo.module.css";
 
 const TodoList = () => {
   const { todoList, handleAddTodoItem, newTitle, setNewTitle, error } =
-    useContext(TodoContext);
+    useTodoContext();
 
   return (
     <>
