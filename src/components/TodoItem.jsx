@@ -1,44 +1,42 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import styles from "./todo.module.css";
 import { deleteTask, updateTask } from "../api/task";
-import { TodoContext } from "../context/TodoContext";
+import { useTodoContext } from "../context/TodoContext";
 
-function TodoItem({ item }) {
-  const { todoList, setTodoList, setError } = useContext(TodoContext);
+function TodoItem({ item: { _id, title, isComplete } }) {
+  const { todoList, setTodoList, setError } = useTodoContext();
   const [isEdit, setIsEdit] = useState(false);
-  const [value, setValue] = useState(item.title);
+  const [value, setValue] = useState(title);
 
   const handleDeleteTodoItem = async (e) => {
     e.preventDefault();
-    const { data } = await deleteTask(item._id);
+    const { data } = await deleteTask(_id);
     if (!data || !data.success) {
       setError(data?.error || "Server error");
     } else {
       setError("");
-      setTodoList(todoList.filter((ele) => ele._id !== item._id));
+      setTodoList(todoList.filter((ele) => ele._id !== _id));
     }
   };
 
   const handleUpdateTodoItem = async (e, task) => {
     e.preventDefault();
-    const { data } = await updateTask(item._id, task);
+    const { data } = await updateTask(_id, task);
     if (!data || !data.success) {
       setError(data?.error || "Server error");
     } else {
       setError("");
       const newTask = data.data;
-      setTodoList(
-        todoList.map((ele) => (ele._id === item._id ? newTask : ele)),
-      );
+      setTodoList(todoList.map((ele) => (ele._id === _id ? newTask : ele)));
     }
   };
 
   const handleEditClick = async (e) => {
     if (isEdit) {
-      if (value !== item.title) {
+      if (value !== title) {
         await handleUpdateTodoItem(e, {
           title: value,
-          isComplete: item.isComplete,
+          isComplete,
         });
       }
       setIsEdit(false);
@@ -47,16 +45,14 @@ function TodoItem({ item }) {
     }
   };
 
-  if (!item) return null;
-
   return (
     <li className={styles.itemContainer}>
       <button
         className={styles.itemLeft}
         onClick={(e) =>
           handleUpdateTodoItem(e, {
-            title: item.title,
-            isComplete: !item.isComplete,
+            title,
+            isComplete: !isComplete,
           })
         }
         disabled={isEdit ? true : false}
@@ -67,7 +63,7 @@ function TodoItem({ item }) {
             cy="7"
             r="6"
             stroke="grey"
-            fill={item.isComplete ? "grey" : "none"}
+            fill={isComplete ? "grey" : "none"}
           />
         </svg>
         {isEdit ? (
@@ -80,20 +76,18 @@ function TodoItem({ item }) {
           <p
             style={{
               margin: "0px 5px",
-              ...(item.isComplete ? { textDecoration: "line-through" } : {}),
+              ...(isComplete ? { textDecoration: "line-through" } : {}),
             }}
           >
-            {item?.title}
+            {title}
           </p>
         )}
       </button>
       <div className={styles.btnContainer}>
         <button
           className={styles.btn}
-          disabled={item.isComplete ? true : false}
-          onClick={(e) => {
-            handleEditClick(e);
-          }}
+          disabled={isComplete}
+          onClick={handleEditClick}
         >
           {isEdit ? "Confirm" : "Edit"}
         </button>
